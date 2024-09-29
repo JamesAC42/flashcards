@@ -118,7 +118,7 @@ setInterval(backupToJson, 1000 * 60 * 20);
 
 // Modify API endpoints to work with Redis
 
-app.get('/api/decks', async (req, res) => {
+app.get('/decks', async (req, res) => {
   try {
     //console.log('Fetching decks...');
     const data = await addToQueue(readDatabase);
@@ -137,7 +137,7 @@ app.get('/api/decks', async (req, res) => {
   }
 });
 
-app.post('/api/decks', async (req, res) => {
+app.post('/decks', async (req, res) => {
   try {
     const newDeck = {
       id: Date.now().toString(),
@@ -158,7 +158,7 @@ app.post('/api/decks', async (req, res) => {
   }
 });
 
-app.get('/api/decks/:id', async (req, res) => {
+app.get('/decks/:id', async (req, res) => {
   try {
     const deckId = req.params.id;
     const deckInfo = await redis.hgetall(`flashcards:${deckId}`);
@@ -181,7 +181,7 @@ app.get('/api/decks/:id', async (req, res) => {
 });
 
 // Modify existing endpoints to work with decks
-app.post('/api/decks/:id/flashcards', async (req, res) => {
+app.post('/decks/:id/flashcards', async (req, res) => {
   try {
     const newFlashcard = {
       id: Date.now().toString(),
@@ -202,7 +202,7 @@ app.post('/api/decks/:id/flashcards', async (req, res) => {
 });
 
 // Update notes for a specific deck
-app.put('/api/decks/:id/notes', async (req, res) => {
+app.put('/decks/:id/notes', async (req, res) => {
   try {
     const updatedDeck = await addToQueue(async () => {
       await redis.hset(`flashcards:${req.params.id}`, 'notes', req.body.notes);
@@ -228,7 +228,7 @@ app.put('/api/decks/:id/notes', async (req, res) => {
 });
 
 // Modify the generate flashcards endpoint
-app.post('/api/decks/:id/generate-flashcards', async (req, res) => {
+app.post('/decks/:id/generate-flashcards', async (req, res) => {
   try {
     const { notes } = req.body;
     //console.log('Generating flashcards for notes:', notes);
@@ -312,7 +312,7 @@ Notes: ${notes}`
 });
 
 // Update a flashcard
-app.put('/api/decks/:deckId/flashcards/:flashcardId', async (req, res) => {
+app.put('/decks/:deckId/flashcards/:flashcardId', async (req, res) => {
   try {
     const updatedFlashcard = await addToQueue(async () => {
       const cards = await redis.lrange(`flashcards:${req.params.deckId}:cards`, 0, -1);
@@ -337,7 +337,7 @@ app.put('/api/decks/:deckId/flashcards/:flashcardId', async (req, res) => {
 });
 
 // Delete a flashcard
-app.delete('/api/decks/:deckId/flashcards/:flashcardId', async (req, res) => {
+app.delete('/decks/:deckId/flashcards/:flashcardId', async (req, res) => {
   try {
     const result = await addToQueue(async () => {
       const cards = await redis.lrange(`flashcards:${req.params.deckId}:cards`, 0, -1);
@@ -364,7 +364,7 @@ app.delete('/api/decks/:deckId/flashcards/:flashcardId', async (req, res) => {
 });
 
 // Modify the existing add flashcard endpoint
-app.post('/api/decks/:id/flashcards', async (req, res) => {
+app.post('/decks/:id/flashcards', async (req, res) => {
   try {
     const newFlashcard = {
       id: Date.now().toString(),
@@ -390,7 +390,7 @@ app.post('/api/decks/:id/flashcards', async (req, res) => {
 });
 
 // Modify the PUT /api/decks/:id endpoint to update notes and name
-app.put('/api/decks/:id', async (req, res) => {
+app.put('/decks/:id', async (req, res) => {
   try {
     const updatedDeck = await addToQueue(async () => {
       const deckInfo = await redis.hgetall(`flashcards:${req.params.id}`);
@@ -429,7 +429,7 @@ app.put('/api/decks/:id', async (req, res) => {
 });
 
 // Add this new endpoint for deleting a deck
-app.delete('/api/decks/:id', async (req, res) => {
+app.delete('/decks/:id', async (req, res) => {
   try {
     const result = await addToQueue(async () => {
       const exists = await redis.sismember('flashcards:decks', req.params.id);

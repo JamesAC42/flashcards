@@ -31,7 +31,7 @@ const NotesInput: React.FC<NotesInputProps> = ({ deckId, initialNotes, onNotesUp
   const handleGenerateFlashcards = async () => {
     setIsGenerating(true);
     try {
-      const response = await fetch(`/api/decks/${deckId}/generate-flashcards`, {
+      const response = await fetch(`/flashcards/api/decks/${deckId}/generate-flashcards`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ notes }),

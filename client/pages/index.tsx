@@ -14,7 +14,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchDecks = async () => {
       try {
-        const response = await fetch('/api/decks');
+        const response = await fetch('/flashcards/api/decks');
         if (response.ok) {
           const fetchedDecks = await response.json();
           setDecks(fetchedDecks);
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
   const handleUpdateFlashcard = async (updatedFlashcard: Flashcard) => {
     if (selectedDeck) {
       try {
-        await axios.put(`/api/decks/${selectedDeck.id}/flashcards/${updatedFlashcard.id}`, updatedFlashcard);
+        await axios.put(`/flashcards/api/decks/${selectedDeck.id}/flashcards/${updatedFlashcard.id}`, updatedFlashcard);
         const updatedDecks = decks.map(deck => 
           deck.id === selectedDeck.id
             ? { ...deck, flashcards: deck.flashcards.map(f => f.id === updatedFlashcard.id ? updatedFlashcard : f) }
@@ -57,7 +57,7 @@ const Home: React.FC = () => {
   const handleDeleteFlashcard = async (id: string) => {
     if (selectedDeck) {
       try {
-        await axios.delete(`/api/decks/${selectedDeck.id}/flashcards/${id}`);
+        await axios.delete(`/flashcards/api/decks/${selectedDeck.id}/flashcards/${id}`);
         const updatedDecks = decks.map(deck => 
           deck.id === selectedDeck.id
             ? { ...deck, flashcards: deck.flashcards.filter(f => f.id !== id) }
@@ -73,7 +73,7 @@ const Home: React.FC = () => {
   const handleAddFlashcard = async (newFlashcard: Omit<Flashcard, 'id'>) => {
     if (selectedDeck) {
       try {
-        const response = await axios.post(`/api/decks/${selectedDeck.id}/flashcards`, newFlashcard);
+        const response = await axios.post(`/flashcards/api/decks/${selectedDeck.id}/flashcards`, newFlashcard);
         const addedFlashcard = response.data;
         const updatedDecks = decks.map(deck => 
           deck.id === selectedDeck.id
@@ -100,7 +100,7 @@ const Home: React.FC = () => {
 
   const handleCreateDeck = async (name: string) => {
     try {
-      const response = await axios.post('/api/decks', { name });
+      const response = await axios.post('/flashcards/api/decks', { name });
       const newDeck: Deck = response.data;
       setDecks([...decks, newDeck]);
       setSelectedDeckId(newDeck.id); // Automatically select the new deck
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
 
   const handleDeckUpdate = async (deckId: string, updates: { name?: string; notes?: string }) => {
     try {
-      const response = await axios.put(`/api/decks/${deckId}`, updates);
+      const response = await axios.put(`/flashcards/api/decks/${deckId}`, updates);
       const updatedDeck = response.data;
       setDecks(prevDecks => 
         prevDecks.map(deck => 
@@ -133,7 +133,7 @@ const Home: React.FC = () => {
 
   const handleDeleteDeck = async (deckId: string) => {
     try {
-      await axios.delete(`/api/decks/${deckId}`);
+      await axios.delete(`/flashcards/api/decks/${deckId}`);
       setDecks(decks.filter(deck => deck.id !== deckId));
       if (selectedDeckId === deckId) {
         setSelectedDeckId(null);
