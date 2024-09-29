@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./client/*"]
+    },
+    // ... other options
+  },
+  "include": ["client/**/*.ts", "client/**/*.tsx"],
+  "exclude": ["node_modules"]
+}

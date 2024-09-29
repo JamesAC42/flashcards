@@ -1,0 +1,87 @@
+.deckList {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    margin-top:2rem;
+    color: #00ff9d;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      background-color: #2a2a2a;
+      color: #f0f0f0;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #3a3a3a;
+      }
+
+      &.selected {
+        background-color: #4a4a4a;
+        font-weight: bold;
+      }
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        flex-grow: 1;
+        cursor: pointer;
+      }
+
+      .editButton,
+      .deleteButton {
+        background-color: #1e1e1e;
+        color: white;
+        border: none;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .editButton {
+        margin-left: 0.5rem;
+        &:hover {
+          background-color: #00ff9d;
+          color: #1a1a1a;
+        }
+      }
+
+      .deleteButton {
+        margin-left: 0.5rem;
+        &:hover {
+          background-color: #ff3333;
+        }
+      }
+
+      .deckNameInput {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .createDeckButton {
+    margin-top: 0.5rem;
+  }
+
+  .newDeckForm {
+    display: flex;
+    margin-top: 1rem;
+
+    input {
+      flex-grow: 1;
+      margin-right: 0.5rem;
+    }
+  }
+}

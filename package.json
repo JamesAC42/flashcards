@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.3",
+    "express": "^4.21.0",
+    "ioredis": "^5.4.1"
+  },
+  "proxy": "http://localhost:3001"
+}
