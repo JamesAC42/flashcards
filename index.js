@@ -7,7 +7,7 @@ const redisConfig = require('./config/redis.json');
 const Redis = require('ioredis');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5015;
 const BACKUP_FILE = path.join(__dirname, 'database', 'flashcards.json');
 
 const anthropic = new Anthropic({
